@@ -1,0 +1,380 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CINEMAPHILE</title>
+    <link rel="icon" type="image/x-icon" href="{% static '/home/img/cinemaphile.png' %}" />
+
+    <!-- Bootstrap  -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+
+    <!-- FontAwesome -->
+    <script
+      src="https://kit.fontawesome.com/a8162db7fd.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Animate -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <link rel="stylesheet" href="{% static 'home/css/movie.css' %}" />
+    <style>
+      .card6 {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        padding: 20px;
+        width: 750px;
+        word-wrap: break-word;
+        grid-row: 2/3;
+        grid-column: 2/3;
+        margin: 0 auto;
+        display: grid;
+        grid-template-rows: 1fr 6fr 1fr;
+        height: 300px;
+        background: radial-gradient(
+          circle at 10% 20%,
+          rgb(0, 0, 0) 0%,
+          rgb(64, 64, 64) 90.2%
+        );
+        background-clip: border-box;
+        border-radius: 6px;
+        -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1)
+         
+    }
+    
+    .comment-box{
+        
+        padding:5px;
+    }
+    
+    
+    
+    .comment-area textarea{
+       resize: none; 
+            border: 1px solid #ad9f9f;
+       height: 200px;
+    }
+    
+    
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #ffffff;
+        outline: 0;
+        box-shadow: 0 0 0 1px rgb(255, 0, 0) !important;
+    }
+    
+    .send {
+        color: #fff;
+        background-color: #ff0000;
+        border-color: #ff0000;
+    }
+    
+    .send:hover {
+        color: #fff;
+        background-color: #f50202;
+        border-color: #f50202;
+    }
+    
+    
+    
+    .cmt{
+      text-indent: 3ch;
+      height: 200px;
+    }
+    .rate {
+      float: left;
+      height: 46px;
+      padding: 0 10px;
+    }
+    .rate:not(:checked) > input {
+      position: absolute;
+      top: -9999px;
+    }
+    .rate:not(:checked) > label {
+      float: right;
+      width: 1em;
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: pointer;
+      font-size: 30px;
+      color: #ccc;
+    }
+    .rate:not(:checked) > label:before {
+      content: "★ ";
+    }
+    .rate > input:checked ~ label {
+      color: #ffc700;
+    }
+    .rate:not(:checked) > label:hover,
+    .rate:not(:checked) > label:hover ~ label {
+      color: #deb217;
+    }
+    .rate > input:checked + label:hover,
+    .rate > input:checked + label:hover ~ label,
+    .rate > input:checked ~ label:hover,
+    .rate > input:checked ~ label:hover ~ label,
+    .rate > label:hover ~ input:checked ~ label {
+      color: #c59b08;
+    }
+    
+
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar bg-dark px-2 sticky-top">
+      <div class="container-fluid justify-content-start">
+        <a class="navbar-brand" href="/">
+          <img
+            src="{% static '/home/img/cinemaphile.png' %}"
+            alt=""
+            width="45"
+            height="45"
+            class="d-inline-block align-text-top"
+          />
+          <span class="pt-4 site-name animate__animated animate__rubberBand">
+            CINEMAPHILE
+          </span>
+        </a>
+
+        <!-- Search Bar-->
+        <main class="container-fluid justify-content-center my-4">
+            <!-- Title and rating container -->
+            <div
+              class="d-flex justify-content-between align-content-center mx-auto"
+              style="max-width: 70vw"
+            >
+            {% for i in messages %}
+            <div class="alert alert-success" role="alert">
+              {{i}}
+            </div>
+            {% endfor %}
+              <div>
+                <h1 id="title">{{movie.title}}</h1>
+                <p id="year" class="text-info d-inline-block">{{movie.release_date}}</p>
+                
+              </div>
+      
+              <div>
+                <h6 class="mt-3 mb-0 ms-4 text-warning">Rating</h6>
+                <h5 class="mt-1">
+                  <i class="fa-solid fa-star"></i> <span id="rating" style="color: #f5bc42;" > {{avg}}/10 </span>
+                   <span id="rating" style="color: #efebe4;" >({{rating_count}}) Users</span>
+                
+                </h5>
+              
+              </div>
+            </div>
+      
+            <!-- Movie card -->
+            <div
+              class="card mb-3 mx-auto animate__animated animate__backInDown"
+              style="max-width: 70vw"
+            >
+              <div class="row g-0">
+                <div
+                  class="col-md-3 d-flex justify-content-center justify-content-lg-start"
+                >
+                  <img
+                    id="poster"
+                    class="img-fluid rounded-start"
+                    style="max-height: 400px"
+                    src="../media/{{movie.movie_images}}"
+                  />
+                </div>
+                <div class="col-md-8 my-2">
+                  <div class="card-body mt-3">
+                    <h5 class="card-title">Plot</h5>
+                    <p class="card-text" id="plot">{{movie.description}}</p>
+      
+                    <p class="info-type">
+                      Directors :
+                      <span id="director-names" class="information">{{movie.director}}</span>
+                    </p>
+                    <p class="info-type">
+                      Cast :
+                      <span id="cast-names" class="information">{{movie.lead_actor}}</span>
+                    </p>
+                    <p class="info-type">
+                      Genre :
+                      <span id="genre" class="information">{{movie.genre}}</span>
+                    </p>
+                   {% if status == 1 %}
+                   <p class="info-type">
+                    Your Rating :
+                     <span id="genre" class="information ">
+                       <div class="comment-box ml-2">
+                  <h4 style="color: #f5bc42;">{{rate|floatformat:2}}/5</h4>
+                  <form action="" method="POST" name="form_type" >
+                    {% csrf_token %}
+                  <button class="btn btn-warning btn-sm" name="unrate" type="submit">Rate again</button>
+                  </form>
+                   </div>
+                      
+                     </span>
+                   </p>
+                   {% else %}
+                    <p class="info-type">
+                     Your Rating :
+                      <span id="genre" class="information ">
+                        <div class="comment-box ml-2">
+                        <form action="" method="POST" name="form_type" >
+                          {% csrf_token %}
+                          <div class="rate">
+                            <input type="radio" id="star5" name="rate" value="5" />
+                            <label for="star5" title="text">5 stars</label>
+                            <input type="radio" id="star4" name="rate" value="4" />
+                            <label for="star4" title="text">4 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3" title="text">3 stars</label>
+                            <input type="radio" id="star2" name="rate" value="2" />
+                            <label for="star2" title="text">2 stars</label>
+                            <input type="radio" id="star1" name="rate" value="1" />
+                            <label for="star1" title="text">1 star</label>
+                          </div>
+                          <button class="btn btn-warning btn-sm" name="btnform1" type="submit">Rate</button>      
+                      </form>
+                     
+                    </div>
+                       
+                      </span>
+                    </p>
+                    {% endif %}
+                    {% if watch == 1 %}
+                    <p class="card-text">You Added To Watchlist</p>
+                    {% else %}
+
+                    <p class="info-type">
+                      <a href="/add_watchlist/{{movie.id}}"><img height="50px" width="50px"   src="{% static '/home/img/watchlist.png'%}" alt=""></a>
+                    </p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <h2 class="text-center" style=" padding-left: 0.5rem,color=#f5bc42;">Recent Movies</h2>
+            <div class="card6">
+               
+              <div class="row">
+                
+                <div class="col-2">
+                  
+                  
+                  <img src="../media/blank_profile.png" width="70" class="rounded-circle mt-2">
+                
+                
+                </div>
+                
+                <div class="col-10">
+                  
+                  <div class="comment-box ml-2">
+                    
+                    <h4 style='color : rgb(243, 237, 237) ;'>Add Your Review</h4>
+                    
+               
+                    <form action="" method="POST">
+                      {% csrf_token %}
+                    <div class="comment-area">
+                      
+                      <textarea class="form-control" name="description" placeholder="what is your view?" rows="4"></textarea>
+                    
+                    </div>
+                    
+                    <div class="comment-btns mt-2">
+                      
+                      <div class="row">
+                        
+                        <div class="col-6">
+                          
+                          <div class="pull-left">
+                          
+                          <button class="btn btn-success btn-sm" name="btnform2" type="submit">POST</button>      
+                        </form>
+                          </div>
+                        
+                        </div>
+                        
+                      
+                      
+                      </div>
+                    
+                    </div>
+                  
+                  
+                  </div>
+                
+                </div>
+              
+              
+              </div>
+            
+            </div>
+            <h2 class="text-center" style=" padding-left: 0.5rem,color=#f5bc42;">Recent Comments</h2>
+            {% for r in reviews %}
+            <div class="card6">
+               
+              <div class="row">
+                
+                <div class="col-2">
+                  
+                  
+                  <img src="../media/blank_profile.png" width="70" class="rounded-circle mt-2">
+                  <h4 style='color : rgb(228, 237, 240) ;'>{{r.author}}</h4>
+                  <h5></h5>
+                
+                
+                </div>
+                
+                <div class="col-10">
+                  
+                  <div class="comment-box ml-2">
+                    
+                 
+                    
+                   
+                    <div class="comment-area">
+                      
+                      <p class="cmt" placeholder="what is your view?" rows="4" style='color : rgb(237, 233, 233) ;'>{{r.description}} </p>
+                    
+                    </div>
+
+                    
+                    
+                  
+                  
+                  </div>
+                
+                </div>
+              
+              
+              </div>
+            
+            </div>
+{% endfor %}
+
+            <!-- new comments -->
+         
+          </div>
+          
+
+          </main>
+
+    
+  </body>
+</html>

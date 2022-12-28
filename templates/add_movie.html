@@ -1,0 +1,109 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %}Add Movie{% endblock %}
+{% block body %}
+<center>
+    <h1>Movie Add</h1>
+     <div class="container">
+        <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+
+        <form role="form" name="frm" action="" enctype="multipart/form-data" method="post" id="formvalidation" >
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="category_name">Movie Name :</label>
+                <input class="form-control" type="text" name="name" id="category_name"  required>
+            </div>
+            <div class="form-group" id="div1">
+                <label for="category_id">Genre </label>
+                <select name="genre" class="form-control" required>
+                    
+                    {% for h in genre%}
+                        <option required value="{{h.id}}">{{h.name}}
+                        
+                    </option>
+                        {% endfor %}
+                </select>
+                
+            </div>
+            <div class="form-group">
+                <label for="category_name">Director :</label>
+                <input class="form-control" type="text" name="director" id="category_name"  required>
+            </div>
+            <div class="form-group">
+                <label for="category_name">Description :</label>
+                <textarea class="form-control" name="description" required>
+
+                </textarea>
+            </div>
+            <div class="form-group">
+                <label for="category_name">Lead actor:</label>
+                <input class="form-control" type="text" name="actor" id="category_name"  required>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="category_name"> Release Date:</label>
+                    <input class="form-control" type="Date" name="date" id="category_name"  required>
+                </div>
+                <label for="category_name">Image :</label>
+                <input class="form-control" type="file" name="image" id="category_name" required>
+            </div>
+            <button type="submit" class="btn btn-info" id="bt" name="bt">Add</button>
+         
+        </form>
+             </div>
+             <div class="col-md-4">
+            </div>
+         </div>
+     </div>
+    <h3>{{msg}}</h3>
+</center>
+{% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+		
+		$("#formvalidation").validate({
+		rules: {
+			name: {
+				required: true,
+				digits: false,
+				minlength: 5
+				},
+               director : {
+                    required: true,
+                    digits: false,
+                    minlength: 5
+                    },
+                   description : {
+                        required: true,
+                        digits: false,
+                        minlength: 5
+                        },
+		messages : {
+			name: {
+			minlength: "Name should be at least 5 characters",
+			digits : "No Numbers are allowed"
+			},
+            director: {
+                minlength: "Name should be at least 5 characters",
+                digits : "No Numbers are allowed"
+                },
+                description: {
+                    minlength: "Name should be at least 5 characters",
+                    digits : "No Numbers are allowed"
+                    },
+			
+								
+			}
+		}
+		
+		});
+		
+		});
+		
+</script>

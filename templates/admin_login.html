@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN FORM</title>
+    <link rel="stylesheet" type="text/css" href="{% static '/home/css/login.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<style>
+  .error{
+    color: white;
+  }
+</style>
+  </head>
+<body style="background: url({%static '/home/img/admin_home1.jpg' %}); background-size: cover">
+{% if msg1 %}
+  <div class="alert alert-danger" role="alert">
+{{msg1}}
+  </div>
+  {% endif %}
+
+    <div class="center">
+      <h1>Login to Admin Panel</h1>
+      <form method="post" action="" id="loginform">
+        {% csrf_token %}
+        <div class="txt_field">
+          <input type="text" name="username" required>
+          <span></span>
+          <label>Username</label>
+        </div>
+        <div class="txt_field">
+          <input type="password" name="password" required>
+          <span></span>
+          <label>Password</label>
+        </div>
+       
+        <input type="submit" value="Login" name="submit" >
+      
+      </form>
+      <br>
+      <br>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    
+    <script>
+      $(document).ready(function() {
+        
+        $("#loginform").validate({
+        rules: {
+        username : {
+        required: true,
+        minlength: 5,
+        
+        },
+       
+                  password : {
+                      required: true,
+                      minlength: 8,
+                      
+                      },
+        messages : {
+          username: {
+          minlength: "UserName should be at least 5 characters",
+          digits : "No Numbers are allowed"
+          },
+          
+                      password: {
+                        minlength: "password  should contain atleast 8 characters",
+                        
+                        },
+                    
+          }
+        }
+        
+        });
+        
+        });
+        
+    </script>
+  
+</body>
+</html>

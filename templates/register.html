@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!-- Coding by CodingLab | www.codinglabweb.com-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<title> Registration or Sign Up form in HTML CSS | CodingLab </title>-->
+   <style>
+       @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ background-image: url('../static/home/img/reg_wall4.jpg');
+ background-size: cover;
+    background-repeat: no-repeat;
+}
+.wrapper{
+  position: relative;
+  max-width: 430px;
+  width: 100%;
+  background: #fff;
+  padding: 34px;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  background-color: rgba(0,0,0,0.5);
+}
+.wrapper h2{
+  position: relative;
+  font-size: 22px;
+  font-weight: 600;
+  color: #E8F728;
+}
+.wrapper h2::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 28px;
+  border-radius: 12px;
+  background: #4070f4;
+}
+.wrapper form{
+  margin-top: 30px;
+}
+.wrapper form .input-box{
+  height: 52px;
+  margin: 18px 0;
+}
+form .input-box input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #333;
+  border: 1.5px solid #C7BEBE;
+  border-bottom-width: 2.5px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.input-box input:focus,
+.input-box input:valid{
+  border-color: #F3E83F ;
+}
+form .policy{
+  display: flex;
+  align-items: center;
+}
+form .policy h3{
+    color: #EEEDE8 ;
+}
+form h3{
+    color: #EEEDE8 ;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+.input-box.button input{
+  color: #fff;
+  letter-spacing: 1px;
+  border: none;
+  background:  #E2F222;
+  cursor: pointer;
+}
+.input-box.button input:hover{
+  background: #E9BE11 ;
+}
+form .text h3{
+ color:  #EEEDE8;
+ width: 100%;
+ text-align: center;
+}
+form .text h3 a{
+  color: #4070f4;
+  text-decoration: none;
+}
+form .text h3 a:hover{
+  text-decoration: underline;
+}
+.error{
+  color: white;
+}
+
+   </style>
+   </head>
+<body>
+  <div class="wrapper">
+    <h2>Registration</h2>
+    
+    <div>
+      <style>
+          h5{
+              color: red;
+          }
+      </style>
+      {% for message in messages %}
+      <h5>{{message}}</h5>
+      {% endfor %}
+  </div>
+    <form action="" method="POST" id="formvalidation">
+      {% csrf_token %}
+      <div class="input-box">
+        <input type="text" name="username" placeholder="Enter a username" required>
+      </div>
+      
+      <div class="input-box">
+        <input type="text" name="fname" placeholder="Enter your First Name" required>
+      </div>
+      
+      <div class="input-box">
+        <input type="text" name="lname" placeholder="Enter Your Last Name" required>
+      </div>
+      
+      <div class="input-box">
+        <input type="text" placeholder="Enter your email" name="email" required>
+      </div>
+      
+      <div class="input-box">
+        <input type="password" placeholder="Create password" name="pwd"  required>
+      </div>
+      
+      <div class="input-box">
+        <input type="password" placeholder="Confirm password" name="confpwd" required>
+      </div>
+      
+      <div class="input-box">
+        <input type="number" placeholder="mobile number" class="phone" name="mobile"    
+        pattern="[6789][0-9]{9}" title="Please enter valid phone number" required>
+      </div>
+      
+     
+      <div class="input-box button">
+        <input type="Submit" name="submit" value="Register Now">
+      </div>
+      <div class="text">
+        <h3>Already have an account? <a href="{% url 'home:login' %}"">Login now</a></h3>
+        
+      </div>
+    </form>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+<script>
+
+	$(document).ready(function() {
+		
+		$("#formvalidation").validate({
+		rules: {
+		fname : {
+		required: true,
+		minlength: 5,
+		
+		},
+		lname : {
+			required: true,
+			minlength: 5,
+			
+			},
+			age: {
+				required: true,
+				number: true,
+				min: 10
+				},
+				email: {
+					required: true,
+					email: true
+					},
+				
+							mobile : {
+								required: true,
+								number: true,
+								minlength: 10
+								},
+								pwd : {
+									required: true,
+									minlength: 8,
+									
+									},
+                  confpwd : {
+                    required: true,
+                    minlength: 8,
+                    
+                    },
+		messages : {
+			fname: {
+			minlength: "Name should be at least 5 characters",
+			digits : "No Numbers are allowed"
+			},
+			lname: {
+				minlength:  "<h6 style='color : white ;'>Name should be at least 5 characters </h6>",
+				digits : "No Numbers are allowed"
+				},
+				age: {
+					required: "Please enter your age",
+					number: "Please enter your age as a numerical value",
+					min: "You must be at least 10 years old"
+					},
+					email: {
+						email: "The email should be in the format: abc@gmail.com"
+						},
+						
+								mobile: {
+									required: "Please enter your mobile number",
+									number: "Please enter your number as a numerical value",
+									min: "Mobile should contain atleast 10 digits"
+									},
+									pwd: {
+										minlength: "password  should contain atleast 8 characters",
+										
+										},
+                    confpwd: {
+                      minlength: "password  should contain atleast 8 characters",
+                      
+                      },
+								
+			}
+		}
+		
+		});
+		
+		});
+		
+</script>
+</body>
+</html>
+
+

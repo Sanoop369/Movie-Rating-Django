@@ -1,0 +1,36 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block title %}Add Genre{% endblock %}
+{% block body %}
+<center>
+    <h1>Genre Add</h1>
+     <div class="container">
+        <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+
+        <form role="form" name="frm" action="" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="category_name">Genre Name :</label>
+                <input class="form-control" type="text" name="name" id="category_name"   required>
+            </div>
+            
+                
+                <label for="category_name">Image :</label>
+                <input class="form-control" type="file" name="image" id="category_name" required>
+            </div>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-info" id="bt" name="bt">Add</button>
+         
+        </form>
+             </div>
+             <div class="col-md-4">
+            </div>
+         </div>
+     </div>
+    <h3>{{msg}}</h3>
+</center>
+{% endblock %}
